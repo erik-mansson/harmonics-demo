@@ -12,7 +12,7 @@ It is intended to be used to illustrate concepts related to ultrafast optics and
 
 ## How to use it?
 
-On Windows with Python via Anaconda or Miniconda, the easiest way to launch the program is to read and edit [harmonics_demo_launcher.bat] and then double-click it create a shortcut to it. On Linux you run [harmonics_demo.py] like any python script, possibly after activating a suitable python environment.
+On Windows with Python via Anaconda or Miniconda, the easiest way to launch the program is to read and edit [harmonics_demo_launcher.bat](harmonics_demo_launcher.bat) and then double-click it create a shortcut to it. On Linux you run [harmonics_demo.py](harmonics_demo.py) like any python script, possibly after activating a suitable python environment.
 
 The bottom left side of th graphical user interface has eight numeric input boxes for choosing the harmonic orders (1 is the fundamental frequency, 2 is twice that frequency and so on ...), sliders for choosing the amplitude of each tone, and knobs/dials for choosing their phase (0 is with the indicator to the right).
 
