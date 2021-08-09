@@ -23,3 +23,5 @@ The rest of the window has diagrams showing the result in different ways. The wh
 ## Dependencies
 Python 3 environment with at least the packages numpy, PyQt5 and pyqtgraph. To be able to play the waveforms as audio, you also need the pyaudio package but the program runs without it.
 
+## License
+This program and its documentation are released under the [Mozilla Public License 2.0](https://www.mozilla.org/en-US/MPL/2.0/), [summarized here](https://choosealicense.com/licenses/mpl-2.0/). You are free to distribute and develop it further under the terms of the license. If you use it for teaching, a link here would be appreciated (and would be a simple way of letting students download and play with the sofware themselves). If you wish to contribute improvements, click the Issues-tab and create an issue to describe your suggestion (or a pull-request with your version).
