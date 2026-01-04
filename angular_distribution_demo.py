@@ -553,7 +553,7 @@ if __name__ == '__main__':  # To start the program when executed as a script (no
         QLocale.setDefault(locale)
         
         window = None
-        last_keyboard_interrupt_timestamp = np.NaN
+        last_keyboard_interrupt_timestamp = np.nan
         
         def excepthook(exc_type, exc_value, exc_tb):
             nonlocal last_keyboard_interrupt_timestamp

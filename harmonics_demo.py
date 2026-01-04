@@ -172,9 +172,9 @@ class HarmonicsGUI(QtWidgets.QMainWindow):
         phase = np.angle(transformed)
         self.fft_intensity.setData(frequencies, intensity)
         self.fft_phase.setData(frequencies, phase.copy())
-        phase[intensity < 1E-2 * intensity.max()] = np.NaN
-        phase[:-1][intensity[:-1] < intensity[1:]] = np.NaN  # not a peak, since below the following
-        phase[1:][intensity[1:] < intensity[:-1]] = np.NaN  # not a peak, since below the preceeding
+        phase[intensity < 1E-2 * intensity.max()] = np.nan
+        phase[:-1][intensity[:-1] < intensity[1:]] = np.nan  # not a peak, since below the following
+        phase[1:][intensity[1:] < intensity[:-1]] = np.nan  # not a peak, since below the preceeding
         self.fft_phase_strong.setData(frequencies, phase)
 
     def setOrders(self, which):
@@ -305,6 +305,7 @@ class HarmonicsGUI(QtWidgets.QMainWindow):
                 format=pyaudio.paFloat32, rate=int(self.sound_sampling_frequency), channels=1,
                 input=False, output=True, frames_per_buffer=self.audio.shape[0],
                 stream_callback=self.pyaudio_callback, start=True)
+
     @pyqtSlot()
     def soundVolumeChanged(self):
         if self._volume.value() == 0:
@@ -380,7 +381,7 @@ if __name__ == '__main__':  # To start the program when executed as a script (no
         QLocale.setDefault(locale)
         
         window = None
-        last_keyboard_interrupt_timestamp = np.NaN
+        last_keyboard_interrupt_timestamp = np.nan
         
         def excepthook(exc_type, exc_value, exc_tb):
             nonlocal last_keyboard_interrupt_timestamp
