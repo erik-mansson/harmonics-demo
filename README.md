@@ -8,10 +8,13 @@ The harmonics_demo.py is intended to be used to illustrate concepts related to u
 
 ### Screenshots
 ![Continuous-waveform example with odd and even harmonic orders and random phases](https://github.com/erik-mansson/harmonics-demo/blob/screenshots/screenshots/screenshot_1.png?raw=true)
+Continuous-waveform example with odd and even harmonic orders and random phases.
 
 ![Odd-order harmonics with pi phase-shifts giving a pulse train with alternating signs](https://github.com/erik-mansson/harmonics-demo/blob/screenshots/screenshots/screenshot_2.png?raw=true)
+Odd-order harmonics with pi phase-shifts giving a pulse train with alternating signs.
 
 ![In the option to get an isolated pulse, an undocumented gating envelope function is applied and the sound playback makes longer pauses to hear the separate pulses](https://github.com/erik-mansson/harmonics-demo/blob/screenshots/screenshots/screenshot_3.png?raw=true)
+In the option to get an isolated pulse, an undocumented gating envelope function is applied and the sound playback makes longer pauses to hear the separate pulses.
 
 ### How to use it?
 
@@ -28,7 +31,14 @@ Python 3 environment with at least the packages numpy, PyQt5 and pyqtgraph. To b
 
 
 ## 2. Angular distribution projections
-The angular_distribution_demo.py is intended to be used to illustrate concepts related to velocity map imaging, mainly of electrons from the photoioinzation of atoms where the result can typically be represented by the sum of a few spherical harmonics.
+The angular_distribution_demo.py is intended to be used to illustrate concepts related to velocity map imaging, mainly of electrons from the photoioinzation of atoms where the result can typically be represented by the sum of a few [spherical harmonics](https://en.wikipedia.org/wiki/Table_of_spherical_harmonics#Visualization_of_complex_spherical_harmonics).
+
+### Screenshots
+<img width="484" height="352" alt="default s_0 p_1 projection" src="https://github.com/user-attachments/assets/115486d0-9fbb-45d9-9b87-34ea5f2ae28a" /><br/>The default example ("s<sub>0</sub>" + "p<sub>1</sub>") with narrow spheres.
+
+<img width="484" height="352" alt="d_1 + f_2 projection" src="https://github.com/user-attachments/assets/e0f822e9-5c5c-41ac-b24a-5c1d2bc03410" /><br/>An example with "d<sub>1</sub>" + "f<sub>2</sub>" with thick/blurry spheres slightly overlapping, projected onto an xz-plane (integrating intensity along the y axis).<br/>
+<img width="358" height="215" alt="d_1 + f_2 slice abs, cropped" src="https://github.com/user-attachments/assets/8a6b7b60-49d4-476c-8a02-626b40622b84" /><img width="358" height="215" alt="d_1 + f_2 phi,theta, cropped" src="https://github.com/user-attachments/assets/34f841e9-ee16-41d1-a4d6-42b031a2c0d5" /><br/>Alternative visualizations of "d<sub>1</sub>" + "f<sub>2</sub>": (left) absolute values at the y=0 slice or (right) projection onto a sphere (integrating intensity radially).
+
 
 ## License
 These programs and their documentation are released under the [Mozilla Public License 2.0](https://www.mozilla.org/en-US/MPL/2.0/), [summarized here](https://choosealicense.com/licenses/mpl-2.0/). You are free to distribute and develop them further under the terms of the license. If you use it for teaching, a link here would be appreciated (and would be a simple way of letting students download and play with the sofware themselves). If you wish to contribute improvements, click the Issues-tab and create an issue to describe your suggestion (or a pull-request with your version).
