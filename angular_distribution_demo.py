@@ -50,8 +50,8 @@ class ComplexMode(enum.Enum):
 
 
 class ProjectionMode(enum.Enum):
-    sum = '(x,y) 2D-projection of all'
-    slice = '(x,y) 2D-slice (central 1%)'
+    sum = '(x,z) 2D-projection of all y'
+    slice = '(x,z) 2D-slice (central 1% y)'
     spherical = '(phi,theta) Spherical projection'
 
 
@@ -192,18 +192,24 @@ class AngularGUI(QtWidgets.QMainWindow):
         self.setCursor(Qt.WaitCursor)
         # Cached coordinate arrays
         self.abscissa = np.arange(self.pixels, dtype=self.dtype) - self.pixels // 2
-        # The VMI-flattened coordinate (y) is first for simplicity
-        y = self.abscissa[:, None, None]  # varies along axis 0
-        self.z = self.abscissa[None, :, None]  # varies along axis 1
-        x = self.abscissa[None, None, :]  # varies along axis 2
+        # The VMI-flattened coordinate (y) is first for simplicity (summing over it gives xz-image)
+        y = self.abscissa[:, None, None]  # varies along axis 0 in 3D-array
+        self.z = self.abscissa[None, :, None]  # varies along axis 1 in 3D-array
+        x = self.abscissa[None, None, :]  # varies along axis 2 in 3D-array
         self.xy_axes_indices = (0, 2)
+        # Thanks to numpy broadcasting, the formally 3D arrays don't need to repeat values:
+        assert self.z.ndim == 3  # with axes representing [y, z, x]
+        assert self.z.shape == (1, self.pixels, 1)  # not using memory for axes without variation
         
         r_xy = np.hypot(x, y)
         self.phi = np.arctan2(y, x)  # -pi to +pi radians
         self.radius = np.hypot(r_xy, self.z)
         self.phi_broadcasted = np.broadcast_to(self.phi, self.radius.shape)  # full 3D array
+        assert self.phi.shape == (self.pixels, 1, self.pixels)  # [y, z, x] but no z-dependence
+        assert self.phi_broadcasted.shape == (self.pixels, self.pixels, self.pixels)  # [y, z, x]
         self.theta = np.arctan2(r_xy, self.z)  # 0 to pi radians
         # self.theta = np.arccos(self.z / self.radius); self.theta[self.radius == 0] = 0  # OK alternative
+        assert self.theta.ndim == 3
         # assert np.max(np.abs(self.z - self.radius * np.cos(self.theta))) < 1E-10
         assert np.max(np.abs(self.z - self.radius * np.cos(self.theta))) < 1E-4
         
@@ -255,7 +261,7 @@ class AngularGUI(QtWidgets.QMainWindow):
 
     @pyqtSlot()
     def recompute(self):
-        """ Recompute self.result, and call updateDiagrams()."""
+        """Recompute self.result, and call updateDiagrams()."""
         self.setCursor(Qt.WaitCursor)
         self._progress.setMaximum(np.sum(self.amplitudes != 0) * 4 + 2)
         self._progress.setValue(1)
@@ -298,7 +304,7 @@ class AngularGUI(QtWidgets.QMainWindow):
             else:  # 'Incoherent sum of squared abs. |term|²+|term|²+|term|²+...'
                 result = result + abs2(term)
             self._progress.setValue(self._progress.value() + 1)
-        self.result = result
+        self.result = result  # 3D-array with the axes [y, z, x], as in _define_coordinates()
         self.summed_coherently = sum_coherently
         self.unsetCursor()
         self.updateDiagrams()
@@ -374,6 +380,7 @@ class AngularGUI(QtWidgets.QMainWindow):
                                                        theta_edges[1] - theta_edges[0]
                                                        ).translate(-np.pi, 0))
         else:
+            # 2D colormap as function of (x,z) with either a slice or a projectuion (summation).
             if projection == ProjectionMode.slice:
                 # Select central z-slice that closest approximates 1% of array length (may be up to 2%).
                 middle_index = data.shape[0] // 2

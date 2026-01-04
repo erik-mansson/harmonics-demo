@@ -177,12 +177,12 @@
            </property>
            <item>
             <property name="text">
-             <string>(x,y) 2D-projection of all</string>
+             <string>(x,z) 2D-projection of all y</string>
             </property>
            </item>
            <item>
             <property name="text">
-             <string>(x,y) 2D-slice (central 1%)</string>
+             <string>(x,z) 2D-slice (central 1% y)</string>
             </property>
            </item>
            <item>
