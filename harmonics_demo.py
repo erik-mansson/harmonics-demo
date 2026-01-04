@@ -224,7 +224,7 @@ class HarmonicsGUI(QtWidgets.QMainWindow):
         """Set all amplitude widgets to either the same value or an array of values."""
         for i, widget in enumerate(self.amplitude_widgets):
             widget.blockSignals(True)  # don't trigger an update per iteration, call recomputeHarmonics() at end
-            widget.setValue((value if value is not None else values[i]) * self.amplitude_widget_factor)
+            widget.setValue(int((value if value is not None else values[i]) * self.amplitude_widget_factor))
             widget.blockSignals(False)
         self.recomputeHarmonics()
 
