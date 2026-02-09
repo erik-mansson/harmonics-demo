@@ -142,7 +142,10 @@ class AngularGUI(QtWidgets.QMainWindow):
         self._imageLayout.ci.layout.setContentsMargins(0, 0, 0, 0)  # remove outer margins
         self._imageLayout.ci.setSpacing(0)  # remove margins between subdiagrms
         self.imageContainer = self._imageLayout.addPlot()
-        self.imageContainer.setDefaultPadding(0.0)
+        try:
+            self.imageContainer.setDefaultPadding(0.0)
+        except Exception:
+            pass
         # self.imageContainer.hideAxis('left')
         # self.imageContainer.hideAxis('bottom')
         self.image = pg.ImageItem()
@@ -172,18 +175,21 @@ class AngularGUI(QtWidgets.QMainWindow):
         self._verticalPlot.setLabel('left', 'z (px)')
         self._verticalPlot.setLabel('bottom', 'Intensity (arb. u.)')
         self._verticalPlot.setLimits(minXRange=1E-12)  # When numerically just noise near zero, don't zoom all the way in
-        self._verticalPlot.setDefaultPadding(0.0)
         self._verticalPlot.setYLink(self.imageContainer)
         
         self.radial_distribution = self._radialPlot.plot([0.0, 1.0], [0.0, 0.0], pen='y')
         self._radialPlot.setLabel('bottom', 'Radius (px)')
         self._radialPlot.setLimits(minYRange=1E-12)  # When numerically just noise near zero, don't zoom all the way in
-        self._radialPlot.setDefaultPadding(0.0)
         
         self.angular_distribution = self._angularPlot.plot([0.0, 1.0], [0.0, 0.0], pen='y')
         self._angularPlot.setLimits(minYRange=1E-12)  # When numerically just noise near zero, don't zoom all the way in
-        self._angularPlot.setDefaultPadding(0.01)
         # self._angularPlot.hideAxis('left')
+        try:  # setDefaultPadding is absent om some pyqtgraph version
+            self._radialPlot.setDefaultPadding(0.0)
+            self._verticalPlot.setDefaultPadding(0.0)
+            self._angularPlot.setDefaultPadding(0.01)
+        except Exception:
+            pass
         
         self.onImageSizeChange()  # Updates self.pixels and calls self._define_coordinates() and self.recompute()
         
